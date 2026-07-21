@@ -1,0 +1,433 @@
+{
+  "categories": [
+    {
+      "id": "rice-meals",
+      "name": "Rice & Meals",
+      "description": "Aromatic and delicious rice dishes",
+      "order": 1
+    },
+    {
+      "id": "swallow",
+      "name": "Swallow",
+      "description": "Traditional swallow specialties",
+      "order": 2
+    },
+    {
+      "id": "proteins",
+      "name": "Proteins & Add-ons",
+      "description": "Premium protein choices",
+      "order": 3
+    },
+    {
+      "id": "soups",
+      "name": "Soups",
+      "description": "Rich and flavorful soups",
+      "order": 4
+    },
+    {
+      "id": "bread",
+      "name": "Bread",
+      "description": "Fresh baked daily",
+      "order": 5
+    },
+    {
+      "id": "pastries",
+      "name": "Pastries",
+      "description": "Delightful pastries and snacks",
+      "order": 6
+    }
+  ],
+  "products": [
+    {
+      "id": "jollof-rice",
+      "name": "Jollof Rice",
+      "price": 1200,
+      "categoryId": "rice-meals",
+      "description": "Perfectly spiced Nigerian jollof rice",
+      "longDescription": "Fragrant, flavorful jollof rice cooked to perfection with our signature blend of spices. A true Nigerian classic.",
+      "tags": ["bestseller", "popular"],
+      "featured": true,
+      "available": true
+    },
+    {
+      "id": "fried-rice",
+      "name": "Fried Rice",
+      "price": 1200,
+      "categoryId": "rice-meals",
+      "description": "Aromatic stir-fried rice",
+      "longDescription": "Perfectly cooked rice with fresh vegetables and protein.",
+      "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/fried%20rice-4wmhs6nH8t1R9a3sf0hfSej0aw2cX5.jpg",
+      "tags": ["popular"],
+      "featured": true,
+      "available": true
+    },
+    {
+      "id": "super-rice",
+      "name": "Super Rice",
+      "price": 1500,
+      "categoryId": "rice-meals",
+      "description": "Rice with mixed proteins",
+      "longDescription": "Delicious rice with chicken, beef and more proteins.",
+      "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/super%20rice-qy0TZOUp1l335ithOU8ZlhB8FiyBGU.jpg",
+      "tags": ["premium"],
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "jollof-rice",
+      "name": "Jollof Rice",
+      "price": 1200,
+      "categoryId": "rice-meals",
+      "description": "Classic West African rice",
+      "longDescription": "Our signature rice dish with carefully selected premium ingredients for a unique flavor.",
+      "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/jollof%20rice-BvWeDsXFEUGalvJOroTIqPzoLtX1hN.jpg",
+      "tags": ["bestseller"],
+      "featured": true,
+      "available": true
+    },
+    {
+      "id": "special-fried-rice",
+      "name": "Special Fried Rice",
+      "price": 1500,
+      "categoryId": "rice-meals",
+      "description": "Premium fried rice blend",
+      "longDescription": "Elevated fried rice with special spices and premium mix-ins.",
+      "tags": [],
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "salad",
+      "name": "Salad",
+      "price": 1000,
+      "categoryId": "rice-meals",
+      "description": "Fresh garden salad",
+      "longDescription": "Crisp, fresh vegetables combined with our house dressing.",
+      "tags": [],
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "moi-moi",
+      "name": "Moi Moi",
+      "price": 600,
+      "categoryId": "swallow",
+      "description": "Steamed bean cake",
+      "longDescription": "Traditional steamed bean cake with egg.",
+      "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/moi%20moi-U6fWC3mzpOHE1DNLftFmNff3agDTUe.jpg",
+      "tags": [],
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "amala",
+      "name": "Amala",
+      "price": 500,
+      "categoryId": "swallow",
+      "description": "Traditional yam swallow",
+      "longDescription": "Smooth and filling amala, perfect with any soup.",
+      "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/amala-tmnq8EiRWDvqRhclReeO1JywN4gjc3.jpg",
+      "tags": [],
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "semo",
+      "name": "Semo",
+      "price": 500,
+      "categoryId": "swallow",
+      "description": "Semolina swallow",
+      "longDescription": "Smooth semolina swallow.",
+      "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/semo-u3F2cqwz8Z44eTjnVI1vK3XL6INvzD.jpg",
+      "tags": [],
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "pounded-yam",
+      "name": "Pounded Yam",
+      "price": 800,
+      "categoryId": "swallow",
+      "description": "Fresh pounded yam",
+      "longDescription": "Smooth, creamy pounded yam prepared fresh daily.",
+      "tags": [],
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "eba",
+      "name": "Eba",
+      "price": 500,
+      "categoryId": "swallow",
+      "description": "Cassava swallow",
+      "longDescription": "Traditional cassava-based swallow.",
+      "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/eba-tlq2L0DEnBx7RtCPohiGiT2LGQULrw.jpg",
+      "tags": [],
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "gizzard",
+      "name": "Gizzard",
+      "price": 2500,
+      "categoryId": "proteins",
+      "description": "Tender seasoned gizzard",
+      "longDescription": "Perfectly seasoned and tender gizzard, ideal as a protein side.",
+      "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/gizzard-YO87kyPPuoOJykndxRI9PpxUYOSWqT.jpg",
+      "tags": ["premium"],
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "beef",
+      "name": "Beef",
+      "price": 1500,
+      "categoryId": "proteins",
+      "description": "Grilled tender beef",
+      "longDescription": "Succulent grilled beef with our signature seasoning.",
+      "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/beef-ZyXCpf4HrsJNPokoJ0WCNPN6WzVf8d.jpg",
+      "tags": [],
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "turkey",
+      "name": "Turkey",
+      "price": 2500,
+      "categoryId": "proteins",
+      "description": "Seasoned turkey meat",
+      "longDescription": "Premium turkey pieces seasoned with special spices.",
+      "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/turkey-Plf5PFVErb5DQPh7EnQRqvwmq4Bv82.jpg",
+      "tags": ["premium"],
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "peppered-chicken",
+      "name": "Peppered Chicken",
+      "price": 2000,
+      "categoryId": "proteins",
+      "description": "Spiced chicken pieces",
+      "longDescription": "Tender chicken pieces cooked in our signature pepper sauce.",
+      "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/peppered%20chicken-QKfo1n6kAMk1Fug0gCQb9l2Xvz0QiI.jpg",
+      "tags": ["popular"],
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "kote",
+      "name": "Kote",
+      "price": 2000,
+      "categoryId": "proteins",
+      "description": "Traditional kote preparation",
+      "longDescription": "Authentic traditional kote with herbs and spices.",
+      "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/kote-JznaxyD3QlBJO0gcwVUaxxdMn9VJuX.jpg",
+      "tags": [],
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "egusi-soup",
+      "name": "Egusi Soup",
+      "price": 1000,
+      "categoryId": "soups",
+      "description": "Rich melon seed soup",
+      "longDescription": "Hearty egusi soup made with premium ingredients.",
+      "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/egusi-n5hFndxPxO6Bew04RaUspQo1Cr3XDu.jpg",
+      "tags": ["popular"],
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "okra-soup",
+      "name": "Okra Soup",
+      "price": 1000,
+      "categoryId": "soups",
+      "description": "Aromatic okra soup",
+      "longDescription": "Traditional okra soup with fresh okra and proteins.",
+      "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/okra-N5ZfmxTvNU4pWIMgLYVR2uDKHmQGRI.jpg",
+      "tags": [],
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "edikaikong",
+      "name": "Edikaikong",
+      "price": 1000,
+      "categoryId": "soups",
+      "description": "Green leafy soup",
+      "longDescription": "Nutritious and delicious edikaikong soup.",
+      "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/edikaikong-eMcbuulrLqWq2uT368AJZQCqUeu413.jpg",
+      "tags": [],
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "family-loaf",
+      "name": "Family Loaf",
+      "price": 1500,
+      "categoryId": "bread",
+      "description": "Large family-sized bread loaf",
+      "longDescription": "Fresh baked family loaf, perfect for the whole family.",
+      "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Loaf%20of%20bread-xGvRyJWbgR0ejz1qiWoFNu85vHQgJv.jpg",
+      "tags": ["bestseller"],
+      "featured": true,
+      "available": true
+    },
+    {
+      "id": "sardine-bread",
+      "name": "Sardine Bread",
+      "price": 1500,
+      "categoryId": "bread",
+      "description": "Bread with sardine filling",
+      "longDescription": "Fresh baked bread filled with sardine.",
+      "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/sardine%20bread-TYDbN4Shjd0fwywfZtpHfBmshY3r7F.jpg",
+      "tags": [],
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "teacake-bread",
+      "name": "Teacake Bread",
+      "price": 900,
+      "categoryId": "bread",
+      "description": "Sweet teacake loaf",
+      "longDescription": "Soft and fluffy teacake bread, perfect as a snack.",
+      "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/teacake%20bread-tGwjmKeVEhFJuxKiBS3i8lxrskJL8J.jpg",
+      "tags": [],
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "meat-pie",
+      "name": "Meat Pie",
+      "price": 900,
+      "categoryId": "pastries",
+      "description": "Flaky meat pie",
+      "longDescription": "Delicious meat filling in crispy pastry.",
+      "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/meatpie-PuuIqjuge4PhKwaSQMAhNWrlHZ9szh.jpg",
+      "tags": [],
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "chicken-pie",
+      "name": "Chicken Pie",
+      "price": 900,
+      "categoryId": "pastries",
+      "description": "Flaky chicken pie",
+      "longDescription": "Delicious chicken filling in crispy pastry.",
+      "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/chicked%20pie-vC2SxNEAiU30OAC7N19r0IsgSeNJwi.jpg",
+      "tags": ["popular"],
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "sausage-rolls",
+      "name": "Sausage Rolls",
+      "price": 600,
+      "categoryId": "pastries",
+      "description": "Savory sausage rolls",
+      "longDescription": "Crispy pastry rolls filled with seasoned sausage.",
+      "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/sausage%20rolls-oX4sBVNnp6jNUBlcwHnV6gEKmR9Yo5.jpg",
+      "tags": [],
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "doughnut",
+      "name": "Doughnut",
+      "price": 500,
+      "categoryId": "pastries",
+      "description": "Fresh glazed doughnut",
+      "longDescription": "Soft and fluffy doughnut, freshly made.",
+      "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/doughnut-CYoP2yy9QwgTRZ3IXGzTPbegJcRy6X.jpg",
+      "tags": [],
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "scotch-eggs",
+      "name": "Scotch Eggs",
+      "price": 1000,
+      "categoryId": "pastries",
+      "description": "Breaded eggs with meat",
+      "longDescription": "Eggs wrapped in meat and breaded until golden.",
+      "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/scotch%20eggs-jLs9Xf60AF5JzTDRS9L4e77K9qcWUZ.jpg",
+      "tags": [],
+      "featured": false,
+      "available": true
+    }
+  ],
+  "testimonials": [
+    {
+      "id": "1",
+      "author": "Ade C.",
+      "content": "Best jollof rice in Lagos! I order from them every week. The taste is consistently amazing.",
+      "rating": 5
+    },
+    {
+      "id": "2",
+      "author": "Tunde B.",
+      "content": "Perfect for office lunch orders. Fast, reliable, and the food never disappoints.",
+      "rating": 5
+    },
+    {
+      "id": "3",
+      "author": "Zainab M.",
+      "content": "Their pastries are incredible. I get the meat pies for my kids and they love them!",
+      "rating": 5
+    }
+  ],
+  "benefitCards": [
+    {
+      "id": "1",
+      "title": "Always Fresh",
+      "description": "Prepared daily with quality ingredients"
+    },
+    {
+      "id": "2",
+      "title": "Quick Service",
+      "description": "Fast orders without compromising quality"
+    },
+    {
+      "id": "3",
+      "title": "Authentic Nigerian",
+      "description": "Genuine flavors you know and love"
+    }
+  ],
+  "offers": [
+    {
+      "id": "1",
+      "title": "Lunch Combo Special",
+      "description": "Jollof Rice + Peppered Chicken + Drink - Save 20%",
+      "cta": "Order Now",
+      "active": true,
+      "order": 1
+    },
+    {
+      "id": "2",
+      "title": "Family Bread Pack",
+      "description": "Get 3 loaves for the price of 2.5",
+      "cta": "Order Now",
+      "active": true,
+      "order": 2
+    }
+  ],
+  "inquiries": [],
+  "siteSettings": {
+    "businessName": "Superchefs Limited",
+    "slogan": "Tastefully Freshh",
+    "phone": "+234 (0) 701 234 5678",
+    "whatsapp": "+234 (0) 701 234 5678",
+    "email": "hello@superchefs.ng",
+    "address": "Palmgrove Restaurant, Lagos, Nigeria",
+    "openingHours": "7:00 AM - 10:00 PM Daily",
+    "socialLinks": {
+      "instagram": "https://instagram.com/superchefs",
+      "facebook": "https://facebook.com/superchefs",
+      "twitter": "https://twitter.com/superchefs"
+    },
+    "aboutDescription": "Superchefs Limited is Africa's leading bakery and confectioneries company. Established 14 years ago and headquartered in Lagos, we operate 40 retail bakeries in major supermarket chains, a flagship restaurant in Palmgrove, and 10 Express snack centers across Lagos. With over 300 employees, we are committed to delivering healthful and quality bread, pastries, and food with modern transparency and innovation."
+  }
+}
