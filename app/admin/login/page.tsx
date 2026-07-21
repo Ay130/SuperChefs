@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Lock, LogIn, AlertCircle } from 'lucide-react';
 
 const ADMIN_PASSWORD = 'superchefs2024';
@@ -84,6 +85,18 @@ export default function AdminLoginPage() {
           <p className="text-xs text-muted-foreground text-center mt-6">
             This is a demo password. In production, use proper authentication.
           </p>
+
+          <div className="mt-8 pt-8 border-t border-border">
+            <p className="text-sm text-muted-foreground text-center mb-4">
+              Procurement manager?
+            </p>
+            <Link
+              href="/procurement"
+              className="w-full px-4 py-2 bg-secondary text-foreground rounded-lg font-medium hover:bg-secondary/80 transition text-center block"
+            >
+              Click here
+            </Link>
+          </div>
         </div>
       </div>
     </main>
