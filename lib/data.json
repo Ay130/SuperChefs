@@ -45,6 +45,7 @@
       "categoryId": "rice-meals",
       "description": "Perfectly spiced Nigerian jollof rice",
       "longDescription": "Fragrant, flavorful jollof rice cooked to perfection with our signature blend of spices. A true Nigerian classic.",
+      "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/jollof%20rice-BvWeDsXFEUGalvJOroTIqPzoLtX1hN.jpg",
       "tags": ["bestseller", "popular"],
       "featured": true,
       "available": true
@@ -71,18 +72,6 @@
       "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/super%20rice-qy0TZOUp1l335ithOU8ZlhB8FiyBGU.jpg",
       "tags": ["premium"],
       "featured": false,
-      "available": true
-    },
-    {
-      "id": "jollof-rice",
-      "name": "Jollof Rice",
-      "price": 1200,
-      "categoryId": "rice-meals",
-      "description": "Classic West African rice",
-      "longDescription": "Our signature rice dish with carefully selected premium ingredients for a unique flavor.",
-      "image": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/jollof%20rice-BvWeDsXFEUGalvJOroTIqPzoLtX1hN.jpg",
-      "tags": ["bestseller"],
-      "featured": true,
       "available": true
     },
     {
@@ -359,43 +348,45 @@
       "available": true
     }
   ],
-  "testimonials": [
-    {
-      "id": "1",
-      "author": "Ade C.",
-      "content": "Best jollof rice in Lagos! I order from them every week. The taste is consistently amazing.",
-      "rating": 5
-    },
-    {
-      "id": "2",
-      "author": "Tunde B.",
-      "content": "Perfect for office lunch orders. Fast, reliable, and the food never disappoints.",
-      "rating": 5
-    },
-    {
-      "id": "3",
-      "author": "Zainab M.",
-      "content": "Their pastries are incredible. I get the meat pies for my kids and they love them!",
-      "rating": 5
-    }
-  ],
-  "benefitCards": [
-    {
-      "id": "1",
-      "title": "Always Fresh",
-      "description": "Prepared daily with quality ingredients"
-    },
-    {
-      "id": "2",
-      "title": "Quick Service",
-      "description": "Fast orders without compromising quality"
-    },
-    {
-      "id": "3",
-      "title": "Authentic Nigerian",
-      "description": "Genuine flavors you know and love"
-    }
-  ],
+  "homepageContent": {
+    "testimonials": [
+      {
+        "id": "1",
+        "author": "Ade C.",
+        "content": "Best jollof rice in Lagos! I order from them every week. The taste is consistently amazing.",
+        "rating": 5
+      },
+      {
+        "id": "2",
+        "author": "Tunde B.",
+        "content": "Perfect for office lunch orders. Fast, reliable, and the food never disappoints.",
+        "rating": 5
+      },
+      {
+        "id": "3",
+        "author": "Zainab M.",
+        "content": "Their pastries are incredible. I get the meat pies for my kids and they love them!",
+        "rating": 5
+      }
+    ],
+    "benefitCards": [
+      {
+        "id": "1",
+        "title": "Always Fresh",
+        "description": "Prepared daily with quality ingredients"
+      },
+      {
+        "id": "2",
+        "title": "Quick Service",
+        "description": "Fast orders without compromising quality"
+      },
+      {
+        "id": "3",
+        "title": "Authentic Nigerian",
+        "description": "Genuine flavors you know and love"
+      }
+    ]
+  },
   "offers": [
     {
       "id": "1",
