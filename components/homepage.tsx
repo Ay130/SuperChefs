@@ -34,41 +34,41 @@ export function Homepage({
   return (
     <main className="bg-background">
       {/* Hero Section */}
-      <section className="relative py-16 md:py-24 bg-gradient-to-br from-primary/20 to-accent/20 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div>
-              <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 text-balance leading-tight">
-                <span className="text-primary">Tastefully Freshh</span>
+      <section className="relative py-24 md:py-32 overflow-hidden">
+        <Image
+          src="/bakery-bg.png"
+          alt="Fresh bakery background"
+          fill
+          className="absolute inset-0 object-cover brightness-75"
+          priority
+        />
+        <div className="relative z-10">
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="max-w-2xl">
+              <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 text-balance leading-tight">
+                Tastefully Fresh
               </h1>
-              <p className="text-lg text-foreground mb-2">
+              <p className="text-xl text-white mb-2 font-semibold">
                 Freshly made meals, pastries and bread
               </p>
-              <p className="text-foreground mb-6">
+              <p className="text-lg text-white/90 mb-8">
                 Nigerian favourites served daily. Great for everyday meals, snacks and quick orders.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <Link
                   href="/menu"
-                  className="px-6 py-3 bg-primary text-white rounded-lg font-medium hover:opacity-90 transition text-center"
+                  className="px-8 py-3 bg-primary text-white rounded-lg font-semibold hover:opacity-90 transition text-center"
                 >
                   View Menu
                 </Link>
                 <a
                   href={`tel:${PHONE}`}
-                  className="px-6 py-3 bg-accent text-white rounded-lg font-medium hover:opacity-90 transition text-center flex items-center justify-center gap-2"
+                  className="px-8 py-3 bg-white text-primary rounded-lg font-semibold hover:bg-white/90 transition text-center flex items-center justify-center gap-2"
                 >
                   <Phone className="w-4 h-4" />
                   Call Now
                 </a>
-              </div>
-            </div>
-
-            {/* Hero Image */}
-            <div className="relative h-80 md:h-96 bg-gradient-to-br from-primary/30 to-accent/30 rounded-xl overflow-hidden flex items-center justify-center border-2 border-primary">
-              <div className="text-center">
-                <p className="text-lg font-bold text-foreground">Premium Meals & Pastries</p>
               </div>
             </div>
           </div>
