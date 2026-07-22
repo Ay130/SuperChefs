@@ -3,19 +3,113 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, LogOut, CheckCircle, Clock, Package, TrendingUp } from 'lucide-react';
+import { ArrowLeft, LogOut, CheckCircle, AlertCircle, Clock } from 'lucide-react';
+
+interface PurchaseOrder {
+  id: number;
+  poNumber: string;
+  status: string;
+  totalAmount: string;
+  createdDate: string;
+  deliveryDate: string;
+  notes?: string;
+}
 
 export default function SupplierPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
+  const [purchaseOrders, setPurchaseOrders] = useState<PurchaseOrder[]>([]);
+  const [stats, setStats] = useState({
+    pending: 0,
+    confirmed: 0,
+    delivered: 0,
+    rejected: 0,
+  });
 
   useEffect(() => {
     const role = localStorage.getItem('procurement_role');
     if (role !== 'supplier') {
       router.push('/procurement');
+      return;
     }
-    setIsLoading(false);
+
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/api/procurement/purchase-orders');
+        const data = await response.json();
+        setPurchaseOrders(data);
+
+        const statusCounts = data.reduce((acc: any, po: PurchaseOrder) => {
+          const status = po.status.toLowerCase();
+          acc[status] = (acc[status] || 0) + 1;
+          return acc;
+        }, {});
+
+        setStats({
+          pending: statusCounts['draft'] || statusCounts['pending'] || 0,
+          confirmed: statusCounts['approved'] || 0,
+          delivered: statusCounts['completed'] || 0,
+          rejected: statusCounts['rejected'] || 0,
+        });
+      } catch (error) {
+        console.error('Error fetching orders:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
   }, [router]);
+
+  const handleStatusUpdate = async (poId: number, newStatus: string) => {
+    try {
+      const response = await fetch('/api/procurement/purchase-orders', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: poId, status: newStatus }),
+      });
+
+      if (response.ok) {
+        setPurchaseOrders(
+          purchaseOrders.map((po) =>
+            po.id === poId ? { ...po, status: newStatus } : po
+          )
+        );
+      }
+    } catch (error) {
+      console.error('Error updating order:', error);
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status.toLowerCase()) {
+      case 'draft':
+      case 'pending':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'approved':
+        return 'bg-green-100 text-green-800';
+      case 'completed':
+        return 'bg-blue-100 text-blue-800';
+      case 'rejected':
+        return 'bg-red-100 text-red-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  const getStatusIcon = (status: string) => {
+    switch (status.toLowerCase()) {
+      case 'draft':
+      case 'pending':
+        return <Clock className="w-4 h-4" />;
+      case 'approved':
+        return <CheckCircle className="w-4 h-4" />;
+      case 'rejected':
+        return <AlertCircle className="w-4 h-4" />;
+      default:
+        return <Clock className="w-4 h-4" />;
+    }
+  };
 
   if (isLoading) {
     return (
@@ -28,7 +122,7 @@ export default function SupplierPage() {
   return (
     <main className="min-h-screen bg-background">
       {/* Top Bar */}
-      <div className="bg-white border-b border-border px-6 py-4 flex items-center justify-between sticky top-0 z-10">
+      <div className="bg-card border-b border-border px-6 py-4 flex items-center justify-between sticky top-0 z-10">
         <Link
           href="/procurement"
           className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition"
@@ -53,121 +147,120 @@ export default function SupplierPage() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-8">
-        {/* Welcome Section */}
-        <div className="bg-gradient-to-r from-green-500/10 to-green-600/10 border border-green-200 rounded-xl p-8 mb-8">
-          <h2 className="text-2xl font-bold text-foreground mb-2">Welcome, Supplier</h2>
-          <p className="text-muted-foreground">
-            View and fulfill procurement orders from Superchefs
-          </p>
-        </div>
-
-        {/* Stats Grid */}
-        <div className="grid md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white border border-border rounded-lg p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-muted-foreground mb-1">Pending Orders</p>
-                <p className="text-3xl font-bold text-foreground">8</p>
-              </div>
-              <Clock className="w-10 h-10 text-yellow-500" />
-            </div>
+        {/* Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+          <div className="bg-card border border-border rounded-lg p-6">
+            <div className="text-sm text-muted-foreground mb-2">Pending Orders</div>
+            <div className="text-3xl font-bold text-foreground">{stats.pending}</div>
           </div>
-
-          <div className="bg-white border border-border rounded-lg p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-muted-foreground mb-1">Completed This Month</p>
-                <p className="text-3xl font-bold text-foreground">34</p>
-              </div>
-              <CheckCircle className="w-10 h-10 text-green-500" />
-            </div>
+          <div className="bg-card border border-border rounded-lg p-6">
+            <div className="text-sm text-muted-foreground mb-2">Confirmed</div>
+            <div className="text-3xl font-bold text-green-600">{stats.confirmed}</div>
           </div>
-
-          <div className="bg-white border border-border rounded-lg p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-muted-foreground mb-1">In Transit</p>
-                <p className="text-3xl font-bold text-foreground">5</p>
-              </div>
-              <Package className="w-10 h-10 text-blue-500" />
-            </div>
+          <div className="bg-card border border-border rounded-lg p-6">
+            <div className="text-sm text-muted-foreground mb-2">Delivered</div>
+            <div className="text-3xl font-bold text-blue-600">{stats.delivered}</div>
           </div>
-
-          <div className="bg-white border border-border rounded-lg p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-muted-foreground mb-1">Total Value (Month)</p>
-                <p className="text-3xl font-bold text-foreground">₦2.4M</p>
-              </div>
-              <TrendingUp className="w-10 h-10 text-purple-500" />
-            </div>
+          <div className="bg-card border border-border rounded-lg p-6">
+            <div className="text-sm text-muted-foreground mb-2">Rejected</div>
+            <div className="text-3xl font-bold text-red-600">{stats.rejected}</div>
           </div>
         </div>
 
-        {/* Feature Cards */}
-        <div className="grid md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-white border border-border rounded-xl p-6 hover:shadow-lg transition cursor-pointer">
-            <h3 className="text-lg font-bold text-foreground mb-2">View Orders</h3>
-            <p className="text-muted-foreground mb-4">
-              See all pending and active procurement orders
-            </p>
-            <button className="text-primary font-semibold text-sm hover:gap-2 transition flex items-center gap-1">
-              Open Orders <ArrowLeft className="w-4 h-4 rotate-180" />
-            </button>
+        {/* Orders Table */}
+        <div className="bg-card border border-border rounded-lg overflow-hidden">
+          <div className="p-6 border-b border-border">
+            <h2 className="text-lg font-semibold text-foreground">Orders Assigned to You</h2>
           </div>
-
-          <div className="bg-white border border-border rounded-xl p-6 hover:shadow-lg transition cursor-pointer">
-            <h3 className="text-lg font-bold text-foreground mb-2">Update Delivery Status</h3>
-            <p className="text-muted-foreground mb-4">
-              Mark orders as shipped or delivered
-            </p>
-            <button className="text-primary font-semibold text-sm hover:gap-2 transition flex items-center gap-1">
-              Update Status <ArrowLeft className="w-4 h-4 rotate-180" />
-            </button>
-          </div>
-
-          <div className="bg-white border border-border rounded-xl p-6 hover:shadow-lg transition cursor-pointer">
-            <h3 className="text-lg font-bold text-foreground mb-2">Order History</h3>
-            <p className="text-muted-foreground mb-4">
-              View completed orders and delivery records
-            </p>
-            <button className="text-primary font-semibold text-sm hover:gap-2 transition flex items-center gap-1">
-              View History <ArrowLeft className="w-4 h-4 rotate-180" />
-            </button>
-          </div>
-
-          <div className="bg-white border border-border rounded-xl p-6 hover:shadow-lg transition cursor-pointer">
-            <h3 className="text-lg font-bold text-foreground mb-2">Contact Support</h3>
-            <p className="text-muted-foreground mb-4">
-              Reach out for order issues or inquiries
-            </p>
-            <button className="text-primary font-semibold text-sm hover:gap-2 transition flex items-center gap-1">
-              Get Support <ArrowLeft className="w-4 h-4 rotate-180" />
-            </button>
-          </div>
-        </div>
-
-        {/* Quick Info */}
-        <div className="bg-white border border-border rounded-xl p-6">
-          <h3 className="text-lg font-bold text-foreground mb-4">How to Fulfill Orders</h3>
-          <ol className="space-y-3 text-muted-foreground">
-            <li className="flex gap-3">
-              <span className="font-bold text-primary">1.</span>
-              <span>Check pending orders in your dashboard</span>
-            </li>
-            <li className="flex gap-3">
-              <span className="font-bold text-primary">2.</span>
-              <span>Confirm availability of requested items</span>
-            </li>
-            <li className="flex gap-3">
-              <span className="font-bold text-primary">3.</span>
-              <span>Update status to "In Transit" once shipped</span>
-            </li>
-            <li className="flex gap-3">
-              <span className="font-bold text-primary">4.</span>
-              <span>Mark as delivered when items arrive</span>
-            </li>
-          </ol>
+          {purchaseOrders.length === 0 ? (
+            <div className="p-6 text-center text-muted-foreground">
+              No orders assigned yet
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-border bg-muted/50">
+                    <th className="px-6 py-3 text-left text-sm font-medium text-foreground">
+                      PO Number
+                    </th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-foreground">
+                      Total Amount
+                    </th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-foreground">
+                      Status
+                    </th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-foreground">
+                      Delivery Date
+                    </th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-foreground">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {purchaseOrders.map((po) => (
+                    <tr
+                      key={po.id}
+                      className="border-b border-border hover:bg-muted/50 transition"
+                    >
+                      <td className="px-6 py-4 text-sm font-medium text-foreground">
+                        {po.poNumber}
+                      </td>
+                      <td className="px-6 py-4 text-sm font-medium text-foreground">
+                        ₦{parseFloat(po.totalAmount).toLocaleString()}
+                      </td>
+                      <td className="px-6 py-4 text-sm">
+                        <span
+                          className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(
+                            po.status
+                          )}`}
+                        >
+                          {getStatusIcon(po.status)}
+                          {po.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 text-sm text-muted-foreground">
+                        {po.deliveryDate
+                          ? new Date(po.deliveryDate).toLocaleDateString()
+                          : '-'}
+                      </td>
+                      <td className="px-6 py-4 text-sm flex gap-2">
+                        {po.status.toLowerCase() === 'draft' ||
+                        po.status.toLowerCase() === 'pending' ? (
+                          <>
+                            <button
+                              onClick={() => handleStatusUpdate(po.id, 'Approved')}
+                              className="px-3 py-1 bg-green-600 text-white rounded text-xs hover:bg-green-700 transition"
+                            >
+                              Accept
+                            </button>
+                            <button
+                              onClick={() => handleStatusUpdate(po.id, 'Rejected')}
+                              className="px-3 py-1 bg-red-600 text-white rounded text-xs hover:bg-red-700 transition"
+                            >
+                              Reject
+                            </button>
+                          </>
+                        ) : po.status.toLowerCase() === 'approved' ? (
+                          <button
+                            onClick={() => handleStatusUpdate(po.id, 'Completed')}
+                            className="px-3 py-1 bg-blue-600 text-white rounded text-xs hover:bg-blue-700 transition"
+                          >
+                            Mark Delivered
+                          </button>
+                        ) : (
+                          <span className="text-xs text-muted-foreground">
+                            {po.status}
+                          </span>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </div>
     </main>
