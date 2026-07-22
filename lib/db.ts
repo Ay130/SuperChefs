@@ -1,8 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import { drizzle } from 'drizzle-orm/node-postgres'
-import { Pool } from 'pg'
-import * as procurementSchema from './db/procurement'
 import {
   Category,
   Product,
@@ -11,22 +8,6 @@ import {
   ContactInquiry,
   SiteSettings,
 } from './types';
-
-// Drizzle database setup
-const connectionString = process.env.DATABASE_URL
-
-let dbInstance: any = null;
-
-if (connectionString) {
-  try {
-    const pool = new Pool({ connectionString })
-    dbInstance = drizzle(pool, { schema: procurementSchema })
-  } catch (error) {
-    console.warn('Could not initialize Drizzle database:', error);
-  }
-}
-
-export const db = dbInstance;
 
 const DATA_FILE = path.join(process.cwd(), 'lib', 'data.json');
 

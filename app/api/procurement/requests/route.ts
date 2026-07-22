@@ -1,111 +1,80 @@
-import { db } from '@/lib/db'
-import {
-  materialRequests,
-  materialRequestItems,
-} from '@/lib/db/procurement'
-import { eq, desc } from 'drizzle-orm'
-import { NextRequest, NextResponse } from 'next/server'
+// Mock data for MVP - will be replaced with real database queries
+const mockRequests = [
+  {
+    id: 1,
+    requestId: 'REQ-001',
+    status: 'Draft',
+    totalItems: 5,
+    requiredDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+    createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 2,
+    requestId: 'REQ-002',
+    status: 'Approved',
+    totalItems: 8,
+    requiredDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(),
+    createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 3,
+    requestId: 'REQ-003',
+    status: 'Pending',
+    totalItems: 3,
+    requiredDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
+    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 4,
+    requestId: 'REQ-004',
+    status: 'Completed',
+    totalItems: 12,
+    requiredDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+]
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
-    const { searchParams } = new URL(req.url)
-    const status = searchParams.get('status')
-    const branchId = searchParams.get('branchId')
-
-    let query = db.select().from(materialRequests)
-
-    if (status) {
-      query = db
-        .select()
-        .from(materialRequests)
-        .where(eq(materialRequests.status, status))
-    }
-
-    if (branchId) {
-      query = db
-        .select()
-        .from(materialRequests)
-        .where(eq(materialRequests.branchId, parseInt(branchId)))
-    }
-
-    const requests = await query.orderBy(desc(materialRequests.createdAt))
-    return NextResponse.json(requests)
+    return Response.json(mockRequests)
   } catch (error) {
     console.error('Error fetching requests:', error)
-    return NextResponse.json(
-      { error: 'Failed to fetch requests' },
-      { status: 500 }
-    )
+    return Response.json({ error: 'Failed to fetch requests' }, { status: 500 })
   }
 }
 
-export async function POST(req: NextRequest) {
+export async function POST(request: Request) {
   try {
-    const body = await req.json()
-    const {
-      requestId,
-      branchId,
-      requestedBy,
-      requiredDate,
-      notes,
-      items,
-    } = body
+    const data = await request.json()
 
-    // Create material request
-    const [request] = await db
-      .insert(materialRequests)
-      .values({
-        requestId,
-        branchId,
-        requestedBy,
-        requiredDate: requiredDate ? new Date(requiredDate) : null,
-        notes,
-        status: 'Draft',
-        totalItems: items?.length || 0,
-      })
-      .returning()
-
-    // Create request items
-    if (items && items.length > 0) {
-      await db.insert(materialRequestItems).values(
-        items.map((item: any) => ({
-          requestId: request.id,
-          materialId: item.materialId,
-          quantity: item.quantity,
-          unitPrice: item.unitPrice,
-          totalPrice:
-            parseFloat(item.quantity) * parseFloat(item.unitPrice),
-        }))
-      )
+    const newRequest = {
+      id: mockRequests.length + 1,
+      requestId: `REQ-${String(mockRequests.length + 1).padStart(3, '0')}`,
+      status: 'Draft',
+      totalItems: 0,
+      requiredDate: data.requiredDate,
+      createdAt: new Date().toISOString(),
     }
 
-    return NextResponse.json(request, { status: 201 })
+    mockRequests.push(newRequest)
+    return Response.json(newRequest)
   } catch (error) {
     console.error('Error creating request:', error)
-    return NextResponse.json(
-      { error: 'Failed to create request' },
-      { status: 500 }
-    )
+    return Response.json({ error: 'Failed to create request' }, { status: 500 })
   }
 }
 
-export async function PUT(req: NextRequest) {
+export async function PUT(request: Request) {
   try {
-    const body = await req.json()
-    const { id, status } = body
-
-    const result = await db
-      .update(materialRequests)
-      .set({ status, updatedAt: new Date() })
-      .where(eq(materialRequests.id, id))
-      .returning()
-
-    return NextResponse.json(result[0])
+    const data = await request.json()
+    const idx = mockRequests.findIndex(r => r.id === data.id)
+    if (idx !== -1) {
+      mockRequests[idx].status = data.status
+      return Response.json(mockRequests[idx])
+    }
+    return Response.json({ error: 'Not found' }, { status: 404 })
   } catch (error) {
     console.error('Error updating request:', error)
-    return NextResponse.json(
-      { error: 'Failed to update request' },
-      { status: 500 }
-    )
+    return Response.json({ error: 'Failed to update request' }, { status: 500 })
   }
 }
