@@ -42,8 +42,8 @@ export default function ProcurementPage() {
       // Store the selected role in localStorage
       localStorage.setItem('procurement_role', selectedRole);
       
-      // For MVP, all roles navigate to the simple dashboard
-      router.push(`/procurement/simple`);
+      // Navigate to the main dashboard
+      router.push(`/procurement/dashboard`);
     } finally {
       setLoading(false);
     }
