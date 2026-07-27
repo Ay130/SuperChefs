@@ -1,17 +1,33 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { Plus, Search, Download, Eye, Edit, Trash2, CheckCircle, AlertCircle, BarChart3 } from 'lucide-react'
 
 export default function DashboardPage() {
+  const router = useRouter()
   const [materials, setMaterials] = useState<any[]>([])
   const [suppliers, setSuppliers] = useState<any[]>([])
   const [branches, setBranches] = useState<any[]>([])
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [role, setRole] = useState<string | null>(null)
+  const [branchName, setBranchName] = useState<string | null>(null)
 
   useEffect(() => {
+    // Check authentication
+    const authenticated = localStorage.getItem('authenticated')
+    const userRole = localStorage.getItem('procurement_role')
+    const userBranch = localStorage.getItem('branch_name')
+    
+    if (!authenticated || !userRole) {
+      router.push('/procurement')
+      return
+    }
+
+    setRole(userRole)
+    setBranchName(userBranch)
     fetchAllData()
-  }, [])
+  }, [router])
 
   const fetchAllData = async () => {
     setLoading(true)
@@ -137,9 +153,11 @@ export default function DashboardPage() {
         <div className="bg-white rounded-lg border border-slate-200 overflow-hidden">
           <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
             <h2 className="font-semibold text-slate-900">Materials (Inventory)</h2>
-            <button className="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 flex items-center gap-2">
-              <Plus size={16} /> Add Material
-            </button>
+            {role === 'data-team' && (
+              <button className="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 flex items-center gap-2">
+                <Plus size={16} /> Add Material
+              </button>
+            )}
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
@@ -175,8 +193,12 @@ export default function DashboardPage() {
                       </td>
                       <td className="px-6 py-4 flex gap-2">
                         <button className="p-1 hover:bg-blue-100 rounded"><Eye size={16} className="text-blue-600" /></button>
-                        <button className="p-1 hover:bg-orange-100 rounded"><Edit size={16} className="text-orange-600" /></button>
-                        <button className="p-1 hover:bg-red-100 rounded"><Trash2 size={16} className="text-red-600" /></button>
+                        {role === 'data-team' && (
+                          <>
+                            <button className="p-1 hover:bg-orange-100 rounded"><Edit size={16} className="text-orange-600" /></button>
+                            <button className="p-1 hover:bg-red-100 rounded"><Trash2 size={16} className="text-red-600" /></button>
+                          </>
+                        )}
                       </td>
                     </tr>
                   )
@@ -192,9 +214,11 @@ export default function DashboardPage() {
         <div className="bg-white rounded-lg border border-slate-200 overflow-hidden">
           <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
             <h2 className="font-semibold text-slate-900">Suppliers</h2>
-            <button className="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 flex items-center gap-2">
-              <Plus size={16} /> Add Supplier
-            </button>
+            {role === 'data-team' && (
+              <button className="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 flex items-center gap-2">
+                <Plus size={16} /> Add Supplier
+              </button>
+            )}
           </div>
           <div className="grid grid-cols-3 gap-4 p-6">
             {suppliers.length > 0 ? suppliers.map((s: any) => (
@@ -207,8 +231,12 @@ export default function DashboardPage() {
                   <p className="pt-2"><strong>Status:</strong> <span className="text-green-600">● {s.status}</span></p>
                 </div>
                 <div className="flex gap-2 pt-3 border-t">
-                  <button className="flex-1 px-2 py-1 text-xs bg-blue-50 text-blue-600 rounded hover:bg-blue-100">Edit</button>
-                  <button className="flex-1 px-2 py-1 text-xs bg-red-50 text-red-600 rounded hover:bg-red-100">Delete</button>
+                  {role === 'data-team' && (
+                    <>
+                      <button className="flex-1 px-2 py-1 text-xs bg-blue-50 text-blue-600 rounded hover:bg-blue-100">Edit</button>
+                      <button className="flex-1 px-2 py-1 text-xs bg-red-50 text-red-600 rounded hover:bg-red-100">Delete</button>
+                    </>
+                  )}
                 </div>
               </div>
             )) : (
@@ -221,9 +249,11 @@ export default function DashboardPage() {
         <div className="bg-white rounded-lg border border-slate-200 overflow-hidden">
           <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
             <h2 className="font-semibold text-slate-900">Branches</h2>
-            <button className="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 flex items-center gap-2">
-              <Plus size={16} /> Add Branch
-            </button>
+            {role === 'data-team' && (
+              <button className="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 flex items-center gap-2">
+                <Plus size={16} /> Add Branch
+              </button>
+            )}
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
@@ -246,8 +276,12 @@ export default function DashboardPage() {
                     <td className="px-6 py-4 text-slate-700">{b.phone}</td>
                     <td className="px-6 py-4 text-slate-700 text-xs">{b.email}</td>
                     <td className="px-6 py-4 flex gap-2">
-                      <button className="p-1 hover:bg-blue-100 rounded"><Edit size={16} className="text-blue-600" /></button>
-                      <button className="p-1 hover:bg-red-100 rounded"><Trash2 size={16} className="text-red-600" /></button>
+                      {role === 'data-team' && (
+                        <>
+                          <button className="p-1 hover:bg-blue-100 rounded"><Edit size={16} className="text-blue-600" /></button>
+                          <button className="p-1 hover:bg-red-100 rounded"><Trash2 size={16} className="text-red-600" /></button>
+                        </>
+                      )}
                     </td>
                   </tr>
                 )) : (
