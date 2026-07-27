@@ -28,7 +28,6 @@ const navItems = [
   { icon: Users, label: 'Suppliers', href: '/procurement/suppliers' },
   { icon: Package, label: 'Materials', href: '/procurement/materials' },
   { icon: BarChart3, label: 'Reports', href: '/procurement/reports' },
-  { icon: Settings, label: 'Settings', href: '/procurement/settings' },
 ];
 
 export default function ProcurementLayout({
