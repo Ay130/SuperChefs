@@ -61,7 +61,7 @@ export default function ProcurementLayout({
           </button>
         </div>
 
-        <nav className="space-y-1 p-4">
+        <nav className="space-y-1 p-4 pb-32 overflow-y-auto h-[calc(100vh-8rem)]">
           {navItems.map((item) => {
             const Icon = item.icon;
             const active = isActive(item.href);
@@ -69,13 +69,13 @@ export default function ProcurementLayout({
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors whitespace-nowrap ${
                   active
                     ? 'bg-blue-600 text-white'
                     : 'text-slate-300 hover:bg-slate-800 hover:text-white'
                 }`}
               >
-                <Icon className="w-5 h-5" />
+                <Icon className="w-5 h-5 flex-shrink-0" />
                 <span className="text-sm font-medium">{item.label}</span>
               </Link>
             );
