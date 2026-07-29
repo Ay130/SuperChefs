@@ -6,7 +6,7 @@ import { Heart, Leaf, Award } from 'lucide-react';
 
 export const metadata = {
   title: 'About Us | Superchefs Limited',
-  description: 'Learn about Superchefs Limited and our mission to serve Tastefully Freshh meals daily.',
+  description: 'Learn about Superchefs Limited and our mission to serve Tastefully Fresh meals daily.',
 };
 
 export default function AboutPage() {
@@ -121,7 +121,7 @@ export default function AboutPage() {
 
           {/* CTA */}
           <div className="bg-gradient-to-r from-primary to-accent text-white rounded-lg p-12 text-center">
-            <h3 className="text-2xl font-bold mb-4">Experience Tastefully Freshh</h3>
+            <h3 className="text-2xl font-bold mb-4">Experience Tastefully Fresh</h3>
             <p className="mb-6 max-w-2xl mx-auto">
               Discover why Superchefs is trusted by thousands across Nigeria. From our 40 retail bakeries to our flagship Palmgrove restaurant and Express centers.
             </p>

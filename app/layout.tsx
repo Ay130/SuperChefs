@@ -10,7 +10,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Superchefs Limited | Tastefully Freshh',
+  title: 'Superchefs Limited | Tastefully Fresh',
   description: 'Freshly made meals, pastries and bread. Nigerian favourites served daily. Order now on WhatsApp or call us.',
   keywords: ['bakery', 'food delivery', 'Nigerian food', 'Lagos', 'fresh pastries', 'meal delivery'],
   generator: 'v0.app',

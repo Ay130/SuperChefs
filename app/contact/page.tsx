@@ -149,7 +149,7 @@ export default function ContactPage() {
             <div className="text-6xl mb-4">📍</div>
             <h3 className="text-xl font-bold text-foreground mb-2">Visit Us Today</h3>
             <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Come experience Tastefully Freshh meals at any of our convenient locations across Lagos
+              Come experience Tastefully Fresh meals at any of our convenient locations across Lagos
             </p>
             <a
               href="/menu"

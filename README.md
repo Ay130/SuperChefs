@@ -1,4 +1,4 @@
-# Superchefs Limited - Tastefully Freshh
+# Superchefs Limited - Tastefully Fresh
 
 A production-quality bakery and food business website for Superchefs Limited, a Nigerian-based food brand. Built with Next.js 16, Tailwind CSS, and shadcn/ui.
 
@@ -233,7 +233,7 @@ The site is ready for production deployment on Vercel with no additional configu
 - Phone: +234 (0) 701 234 5678
 - Email: hello@superchefs.ng
 - Address: 123 Food Street, Lekki, Lagos, Nigeria
-- Slogan: Tastefully Freshh
+- Slogan: Tastefully Fresh
 
 ## License
 

@@ -21,7 +21,7 @@ export function Footer() {
               </div>
               <span className="font-bold text-lg text-foreground">Superchefs</span>
             </div>
-            <p className="text-sm text-foreground/90">Tastefully Freshh</p>
+            <p className="text-sm text-foreground/90">Tastefully Fresh</p>
             <p className="text-xs text-foreground/80 mt-2">
               Freshly made meals, pastries and bread. Nigerian favourites served daily.
             </p>
