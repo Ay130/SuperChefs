@@ -1,0 +1,16 @@
+{
+  "projectId": "prj_rZXEAjWVemVGHEcyXseAkrRHVziV",
+  "orgId": "team_iYcmCcq4DrpHXTY2xfGvbect",
+  "projectName": "bakery-website-build",
+  "settings": {
+    "createdAt": 1782492437349,
+    "framework": "nextjs",
+    "devCommand": null,
+    "installCommand": null,
+    "buildCommand": "next build",
+    "outputDirectory": null,
+    "rootDirectory": null,
+    "directoryListing": false,
+    "nodeVersion": "24.x"
+  }
+}
