@@ -15,8 +15,8 @@ export const metadata: Metadata = {
   keywords: ['bakery', 'food delivery', 'Nigerian food', 'Lagos', 'fresh pastries', 'meal delivery'],
   generator: 'v0.app',
   icons: {
-    icon: '/icon.svg',
-    apple: '/apple-icon.png',
+    icon: '/superchefs-logo.png',
+    apple: '/superchefs-logo.png',
   },
 }
 
