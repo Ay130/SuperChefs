@@ -123,7 +123,20 @@ export async function deleteProduct(id: string): Promise<void> {
 // Homepage Content
 export async function getHomepageContent(): Promise<HomepageContent> {
   const data = await readData();
-  return data.homepageContent;
+
+  // Older seed data stores these fields at the root rather than under homepageContent.
+  return data.homepageContent ?? {
+    heroTitle: 'Tastefully Freshh',
+    heroSubtitle: 'Delicious Nigerian meals, bakery treats, and pastries made fresh daily.',
+    trustMessage: 'Fresh ingredients. Authentic flavors. Always satisfying.',
+    featuredProductIds: data.products.filter((product) => product.featured).map((product) => product.id),
+    testimonials: (data as DataStore & {
+      testimonials?: HomepageContent['testimonials'];
+    }).testimonials ?? [],
+    benefitCards: (data as DataStore & {
+      benefitCards?: HomepageContent['benefitCards'];
+    }).benefitCards ?? [],
+  };
 }
 
 export async function updateHomepageContent(updates: Partial<HomepageContent>): Promise<HomepageContent> {
