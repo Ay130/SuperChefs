@@ -8,6 +8,7 @@ export function SettingsSection() {
   const [settings, setSettings] = useState<SiteSettings | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [status, setStatus] = useState('');
 
   useEffect(() => {
     const loadSettings = async () => {
@@ -36,16 +37,17 @@ export function SettingsSection() {
 
   const handleSave = async () => {
     setSaving(true);
+    setStatus('');
     try {
-      await fetch('/api/settings', {
+      const response = await fetch('/api/settings', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(settings),
       });
-      alert('Settings saved successfully!');
+      if (!response.ok) throw new Error('Unable to save settings');
+      setStatus('Settings saved successfully.');
     } catch (error) {
-      console.error('Error saving settings:', error);
-      alert('Error saving settings');
+      setStatus(error instanceof Error ? error.message : 'Unable to save settings.');
     } finally {
       setSaving(false);
     }
@@ -61,6 +63,7 @@ export function SettingsSection() {
 
   return (
     <div>
+      {status && <p role="status" className="mb-4 rounded-lg border border-primary/30 bg-primary/10 p-3 text-sm">{status}</p>}
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-bold text-foreground">Site Settings</h2>
         <button
