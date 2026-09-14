@@ -9,6 +9,7 @@ import { InquiriesSection } from './sections/inquiries';
 import { SettingsSection } from './sections/settings';
 import { DashboardOverview } from './sections/overview';
 import { PayslipsSection } from './sections/payslips';
+import { ProcurementSection } from './sections/procurement';
 
 interface AdminDashboardProps {
   activeTab: string;
@@ -19,6 +20,7 @@ export function AdminDashboard({ activeTab, setActiveTab }: AdminDashboardProps)
   const tabs = [
     { id: 'dashboard', label: 'Dashboard' },
     { id: 'products', label: 'Products' },
+    { id: 'procurement', label: 'Procurement' },
     { id: 'categories', label: 'Categories' },
     { id: 'homepage', label: 'Homepage' },
     { id: 'offers', label: 'Offers' },
@@ -54,6 +56,7 @@ export function AdminDashboard({ activeTab, setActiveTab }: AdminDashboardProps)
       <div className="max-w-7xl mx-auto p-6">
         {activeTab === 'dashboard' && <DashboardOverview />}
         {activeTab === 'products' && <ProductsSection />}
+        {activeTab === 'procurement' && <ProcurementSection />}
         {activeTab === 'categories' && <CategoriesSection />}
         {activeTab === 'homepage' && <HomepageSection />}
         {activeTab === 'offers' && <OffersSection />}

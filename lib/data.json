@@ -402,6 +402,9 @@
     }
     ]
   },
+  "suppliers": [],
+  "purchaseOrders": [],
+  "inventory": [],
   "offers": [
     {
       "id": "1",

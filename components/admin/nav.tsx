@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { LayoutDashboard, Package, Tag, Home, Megaphone, MessageSquare, FileText, Settings, ChevronDown } from 'lucide-react';
+import { LayoutDashboard, Package, Tag, Home, Megaphone, MessageSquare, FileText, Settings, ClipboardList } from 'lucide-react';
 
 interface AdminNavProps {
   onLogout: () => void;
@@ -15,6 +15,7 @@ export function AdminNav({ onLogout, activeTab, setActiveTab }: AdminNavProps) {
   const sections = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'products', label: 'Products', icon: Package },
+    { id: 'procurement', label: 'Procurement', icon: ClipboardList },
     { id: 'categories', label: 'Categories', icon: Tag },
     { id: 'homepage', label: 'Homepage', icon: Home },
     { id: 'offers', label: 'Offers', icon: Megaphone },

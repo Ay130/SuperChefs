@@ -7,6 +7,9 @@ import {
   HomepageContent,
   ContactInquiry,
   SiteSettings,
+  Supplier,
+  PurchaseOrder,
+  InventoryItem,
 } from './types';
 
 const DATA_FILE = path.join(process.cwd(), 'lib', 'data.json');
@@ -27,6 +30,9 @@ interface DataStore {
   offers: Offer[];
   inquiries: ContactInquiry[];
   siteSettings: SiteSettings;
+  suppliers: Supplier[];
+  purchaseOrders: PurchaseOrder[];
+  inventory: InventoryItem[];
 }
 
 export async function readData(): Promise<DataStore> {
@@ -57,6 +63,9 @@ export async function readData(): Promise<DataStore> {
         openingHours: '',
         socialLinks: {},
       },
+      suppliers: rawData.suppliers ?? [],
+      purchaseOrders: rawData.purchaseOrders ?? [],
+      inventory: rawData.inventory ?? [],
     };
   } catch (error) {
     console.error('Error reading data file:', error);
@@ -79,6 +88,61 @@ export async function writeData(data: DataStore): Promise<void> {
     console.error('Error writing data file:', error);
     throw new Error('Failed to write data');
   }
+}
+
+// Procurement and inventory
+export async function getSuppliers(): Promise<Supplier[]> {
+  const data = await readData();
+  return data.suppliers.filter((supplier) => supplier.active);
+}
+
+export async function createSupplier(input: Omit<Supplier, 'id'>): Promise<Supplier> {
+  const data = await readData();
+  const supplier = { ...input, id: `supplier-${Date.now()}` };
+  data.suppliers.push(supplier);
+  await writeData(data);
+  return supplier;
+}
+
+export async function getInventory(): Promise<InventoryItem[]> {
+  const data = await readData();
+  return data.inventory;
+}
+
+export async function getPurchaseOrders(): Promise<PurchaseOrder[]> {
+  const data = await readData();
+  return data.purchaseOrders.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+}
+
+export async function createPurchaseOrder(input: Omit<PurchaseOrder, 'id' | 'createdAt'>): Promise<PurchaseOrder> {
+  const data = await readData();
+  const order = { ...input, id: `po-${Date.now()}`, createdAt: new Date().toISOString() };
+  data.purchaseOrders.push(order);
+  await writeData(data);
+  return order;
+}
+
+export async function receivePurchaseOrder(id: string, quantities: Record<string, number>): Promise<PurchaseOrder> {
+  const data = await readData();
+  const order = data.purchaseOrders.find((item) => item.id === id);
+  if (!order) throw new Error('Purchase order not found');
+  for (const item of order.items) {
+    const received = Math.max(0, Math.min(item.quantity - item.receivedQuantity, quantities[item.productId] ?? 0));
+    item.receivedQuantity += received;
+    const inventory = data.inventory.find((stock) => stock.productId === item.productId);
+    if (inventory) {
+      inventory.stockQuantity += received;
+      inventory.updatedAt = new Date().toISOString();
+    } else {
+      data.inventory.push({ productId: item.productId, sku: item.productId, costPrice: item.unitCost, stockQuantity: received, reorderLevel: 0, reorderQuantity: 0, unit: 'unit', updatedAt: new Date().toISOString() });
+    }
+  }
+  const receivedCount = order.items.reduce((sum, item) => sum + item.receivedQuantity, 0);
+  const totalCount = order.items.reduce((sum, item) => sum + item.quantity, 0);
+  order.status = receivedCount >= totalCount ? 'received' : 'partially_received';
+  order.receivedAt = new Date().toISOString();
+  await writeData(data);
+  return order;
 }
 
 // Categories

@@ -57,6 +57,46 @@ export type ContactInquiry = {
   responded: boolean;
 };
 
+export type Supplier = {
+  id: string;
+  name: string;
+  contactName: string;
+  email: string;
+  phone: string;
+  leadTimeDays: number;
+  active: boolean;
+};
+
+export type PurchaseOrderItem = {
+  productId: string;
+  quantity: number;
+  unitCost: number;
+  receivedQuantity: number;
+};
+
+export type PurchaseOrder = {
+  id: string;
+  supplierId: string;
+  status: 'draft' | 'ordered' | 'partially_received' | 'received' | 'cancelled';
+  items: PurchaseOrderItem[];
+  notes: string;
+  createdAt: string;
+  orderedAt?: string;
+  receivedAt?: string;
+};
+
+export type InventoryItem = {
+  productId: string;
+  sku: string;
+  supplierId?: string;
+  costPrice: number;
+  stockQuantity: number;
+  reorderLevel: number;
+  reorderQuantity: number;
+  unit: string;
+  updatedAt: string;
+};
+
 export type SiteSettings = {
   businessName: string;
   slogan: string;
