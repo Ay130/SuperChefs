@@ -33,6 +33,8 @@ interface DataStore {
   suppliers: Supplier[];
   purchaseOrders: PurchaseOrder[];
   inventory: InventoryItem[];
+  employees: Record<string, unknown>[];
+  payslips: Record<string, unknown>[];
 }
 
 export async function readData(): Promise<DataStore> {
@@ -66,6 +68,8 @@ export async function readData(): Promise<DataStore> {
       suppliers: rawData.suppliers ?? [],
       purchaseOrders: rawData.purchaseOrders ?? [],
       inventory: rawData.inventory ?? [],
+      employees: rawData.employees ?? [],
+      payslips: rawData.payslips ?? [],
     };
   } catch (error) {
     console.error('Error reading data file:', error);

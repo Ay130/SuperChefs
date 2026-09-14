@@ -85,6 +85,8 @@ const initialFormData: PayslipFormData = {
 export function PayslipsSection() {
   const [formData, setFormData] = useState<PayslipFormData>(initialFormData);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [statusMessage, setStatusMessage] = useState('');
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -113,9 +115,23 @@ export function PayslipsSection() {
 
   const netPay = totalEarnings - totalDeductions;
 
-  const handleSaveRecord = () => {
-    console.log('Saving employee record:', formData);
-    alert('Employee record saved successfully!');
+  const handleSaveRecord = async () => {
+    if (!formData.firstName || !formData.lastName) {
+      setStatusMessage('First name and last name are required.');
+      return;
+    }
+    setIsSaving(true);
+    setStatusMessage('');
+    try {
+      const response = await fetch('/api/staff', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'employee', record: formData }) });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error);
+      setStatusMessage(`Employee record saved (${data.id}).`);
+    } catch (error) {
+      setStatusMessage(error instanceof Error ? error.message : 'Unable to save employee record.');
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleGeneratePayslip = async () => {
@@ -155,6 +171,8 @@ export function PayslipsSection() {
           Enter employee details, salary components, deductions and generate payslip
         </p>
       </div>
+
+      {statusMessage && <div role="status" className="mb-4 rounded-lg border border-primary/30 bg-primary/10 px-4 py-3 text-sm">{statusMessage}</div>}
 
       <form className="space-y-6">
         {/* A. PERSONAL INFORMATION */}
@@ -646,8 +664,9 @@ export function PayslipsSection() {
           <div className="flex gap-3 w-full md:w-auto">
             <button
               type="button"
-              onClick={handleSaveRecord}
-              className="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition"
+  onClick={handleSaveRecord}
+  disabled={isSaving}
+  className="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition disabled:opacity-50"
             >
               <span>Save Employee Record</span>
             </button>

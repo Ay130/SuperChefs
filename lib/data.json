@@ -405,6 +405,8 @@
   "suppliers": [],
   "purchaseOrders": [],
   "inventory": [],
+  "employees": [],
+  "payslips": [],
   "offers": [
     {
       "id": "1",
