@@ -11,6 +11,15 @@ import {
 
 const DATA_FILE = path.join(process.cwd(), 'lib', 'data.json');
 
+const EMPTY_HOMEPAGE_CONTENT: HomepageContent = {
+  heroTitle: '',
+  heroSubtitle: '',
+  trustMessage: '',
+  featuredProductIds: [],
+  testimonials: [],
+  benefitCards: [],
+};
+
 interface DataStore {
   categories: Category[];
   products: Product[];
@@ -22,8 +31,33 @@ interface DataStore {
 
 export async function readData(): Promise<DataStore> {
   try {
-    const data = fs.readFileSync(DATA_FILE, 'utf-8');
-    return JSON.parse(data);
+    const rawData = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8')) as Partial<DataStore> & {
+      testimonials?: HomepageContent['testimonials'];
+      benefitCards?: HomepageContent['benefitCards'];
+    };
+
+    return {
+      categories: rawData.categories ?? [],
+      products: rawData.products ?? [],
+      homepageContent: {
+        ...EMPTY_HOMEPAGE_CONTENT,
+        ...(rawData.homepageContent ?? {}),
+        testimonials: rawData.homepageContent?.testimonials ?? rawData.testimonials ?? [],
+        benefitCards: rawData.homepageContent?.benefitCards ?? rawData.benefitCards ?? [],
+      },
+      offers: rawData.offers ?? [],
+      inquiries: rawData.inquiries ?? [],
+      siteSettings: rawData.siteSettings ?? {
+        businessName: '',
+        slogan: '',
+        phone: '',
+        whatsapp: '',
+        email: '',
+        address: '',
+        openingHours: '',
+        socialLinks: {},
+      },
+    };
   } catch (error) {
     console.error('Error reading data file:', error);
     throw new Error('Failed to read data');

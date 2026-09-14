@@ -359,7 +359,12 @@
       "available": true
     }
   ],
-  "testimonials": [
+  "homepageContent": {
+    "heroTitle": "Tastefully Freshh",
+    "heroSubtitle": "Freshly made meals, pastries and bread",
+    "trustMessage": "Nigerian favourites served daily.",
+    "featuredProductIds": [],
+    "testimonials": [
     {
       "id": "1",
       "author": "Ade C.",
@@ -395,7 +400,8 @@
       "title": "Authentic Nigerian",
       "description": "Genuine flavors you know and love"
     }
-  ],
+    ]
+  },
   "offers": [
     {
       "id": "1",
