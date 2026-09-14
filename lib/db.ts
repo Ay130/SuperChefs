@@ -64,9 +64,17 @@ export async function readData(): Promise<DataStore> {
   }
 }
 
+let writeQueue = Promise.resolve();
+
 export async function writeData(data: DataStore): Promise<void> {
+  const nextWrite = writeQueue.then(() => {
+    const temporaryFile = `${DATA_FILE}.tmp`;
+    fs.writeFileSync(temporaryFile, JSON.stringify(data, null, 2), 'utf-8');
+    fs.renameSync(temporaryFile, DATA_FILE);
+  });
+  writeQueue = nextWrite.catch(() => undefined);
   try {
-    fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
+    await nextWrite;
   } catch (error) {
     console.error('Error writing data file:', error);
     throw new Error('Failed to write data');

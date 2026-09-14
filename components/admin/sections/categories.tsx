@@ -1,21 +1,15 @@
 'use client';
 
-import { Plus } from 'lucide-react';
+import { FormEvent, useEffect, useState } from 'react';
+import { Category } from '@/lib/types';
+import { Plus, Trash2, Edit2, X } from 'lucide-react';
 
+const blank: Omit<Category, 'id'> = { name: '', description: '', order: 0 };
 export function CategoriesSection() {
-  return (
-    <div>
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-foreground">Manage Categories</h2>
-        <button className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition">
-          <Plus className="w-4 h-4" />
-          Add Category
-        </button>
-      </div>
-
-      <div className="bg-white rounded-lg border border-border p-8 text-center">
-        <p className="text-muted-foreground">Category management interface coming soon</p>
-      </div>
-    </div>
-  );
+  const [items, setItems] = useState<Category[]>([]); const [form, setForm] = useState(blank); const [editing, setEditing] = useState<string | null>(null); const [open, setOpen] = useState(false); const [error, setError] = useState('');
+  const load = async () => { const res = await fetch('/api/categories', { cache: 'no-store' }); if (!res.ok) throw new Error('Could not load categories'); setItems(await res.json()); };
+  useEffect(() => { load().catch((e) => setError(e.message)); }, []);
+  const save = async (e: FormEvent) => { e.preventDefault(); const res = await fetch(editing ? `/api/categories/${editing}` : '/api/categories', { method: editing ? 'PATCH' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...form, order: Number(form.order) }) }); if (!res.ok) { setError('Could not save category'); return; } await load(); setOpen(false); setEditing(null); setForm(blank); };
+  const remove = async (id: string) => { if (!confirm('Delete this category?')) return; const res = await fetch(`/api/categories/${id}`, { method: 'DELETE' }); if (!res.ok) { setError('Could not delete category'); return; } setItems((all) => all.filter((item) => item.id !== id)); };
+  return <div><div className="mb-6 flex items-center justify-between"><h2 className="text-2xl font-bold">Manage Categories</h2><button onClick={() => { setEditing(null); setForm(blank); setOpen(true); }} className="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-white"><Plus className="w-4" />Add Category</button></div>{error && <p role="alert" className="mb-4 rounded bg-red-50 p-3 text-red-700">{error}</p>}<div className="rounded-lg border bg-white">{items.map((item) => <div key={item.id} className="flex items-center justify-between border-b p-4"><div><b>{item.name}</b><p className="text-sm text-muted-foreground">{item.description}</p></div><div><button aria-label={`Edit ${item.name}`} onClick={() => { setEditing(item.id); setForm({ name: item.name, description: item.description, image: item.image, order: item.order }); setOpen(true); }} className="p-2"><Edit2 className="w-4 text-primary" /></button><button aria-label={`Delete ${item.name}`} onClick={() => remove(item.id)} className="p-2"><Trash2 className="w-4 text-red-600" /></button></div></div>)}</div>{open && <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"><form onSubmit={save} className="w-full max-w-lg space-y-4 rounded-xl bg-white p-6"><div className="flex justify-between"><h3 className="text-xl font-bold">{editing ? 'Edit Category' : 'Add Category'}</h3><button type="button" aria-label="Close" onClick={() => setOpen(false)}><X /></button></div><input required placeholder="Name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full rounded border p-2" /><textarea placeholder="Description" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="w-full rounded border p-2" /><button className="w-full rounded bg-primary p-2 text-white">Save Category</button></form></div>}</div>;
 }
